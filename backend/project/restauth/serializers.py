@@ -11,10 +11,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 class AuPairUserSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=True)
-    agency = serializers.CharField(max_length=100)
-    town = serializers.CharField(max_length=100)
-    state = serializers.CharField(max_length=30)
-    zipcode = serializers.CharField(max_length=5)
+   # agency = serializers.CharField(max_length=100)
+   # town = serializers.CharField(max_length=100)
+  #  state = serializers.CharField(max_length=30)
+  #  zipcode = serializers.CharField(max_length=5)
 
     class Meta:
         model = AuPairUser

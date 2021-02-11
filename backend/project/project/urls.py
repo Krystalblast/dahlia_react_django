@@ -18,5 +18,5 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('res-auth/',include('restauth.urls')),
+    path('rest-auth/',include('restauth.urls')),
 ]
