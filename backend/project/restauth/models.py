@@ -9,3 +9,8 @@ class AuPairUser(models.Model):
     state = models.CharField(max_length=30)
     zipcode = models.CharField(max_length=5)
 
+    def __str__(sefl):
+        return self.user.username
+    #created_at = models.DateTimeField(defaultauto_now_add = True)
+   #updated_at = models.DateTimeField(auto_now = True)
+

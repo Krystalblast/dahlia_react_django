@@ -11,21 +11,22 @@ class UserSerializer(serializers.ModelSerializer):
 
 class AuPairUserSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=True)
-   # agency = serializers.CharField(max_length=100)
-   # town = serializers.CharField(max_length=100)
-  #  state = serializers.CharField(max_length=30)
-  #  zipcode = serializers.CharField(max_length=5)
 
     class Meta:
         model = AuPairUser
         fields = ('user','agency','town','state','zipcode')
 
     def create(self, validated_data):
-        user_data = validated_data.pop('user')
-        user = UserSerializer.create(UserSerializer(), validated_data=user_data)
-        aupair_user, create = AuPairUser.objects.update_or_create(user=user,
-                                        agency=validated_data.pop('agency'),
-                                        town=validated_data.pop('town'),
-                                        state=validated_data.pop('state'),
-                                        zipcode=validated_data('zipcode'))
+        user_data = {'username': validated_data['user.username'],
+                     'email' : validated_data['user.email'],
+                     'password' : validated_data['user.password']
+                     }
+        print(user_data)
+        user = User.objects.create(**user_data)
+        aupair_user = AuPairUser.objects.create(user=user,
+                                                 agency=validated_data['agency'],
+                                                 town=validated_data['town'],
+                                                 state=validated_data['state'],
+                                                 zipcode=validated_data['zipcode'])
         return aupair_user
+
