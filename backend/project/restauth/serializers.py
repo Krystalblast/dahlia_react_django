@@ -28,9 +28,9 @@ class SignUpSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
-    first_name = serializers.CharField(max_length=255)
-    last_name = serializers.CharField(max_length=255)
-    agency = serializers.CharField(max_length=255)
+    first_name = serializers.CharField(max_length=255, required=True)
+    last_name = serializers.CharField(max_length=255, required=True)
+    agency = serializers.CharField(max_length=255, required=True)
 
     def validated_username(self, username):
         usr = AuPairUser.objects.filter(username=username)

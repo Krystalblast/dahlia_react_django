@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'dahlia_test',
+        'NAME': 'dahlia_test3',
         'HOST': '127.0.0.1',
         'POST': 27071,
     }
@@ -89,6 +89,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
+#AUTH_USER_MODEL = 'restauth.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
