@@ -8,5 +8,6 @@ urlpatterns = [
     path('signin/', SignInView.as_view(), name='signin'),
     #url(r'^signout/$', SignOutView.as_view(), name=r"signout"),
     path('signout/', SignOutView.as_view(),name='signout'),
+    path('update_profile/', ProfileUpdateView.as_view(),name='update_profile'),
    # path('token/', views.obtain_auth_token),
 ]

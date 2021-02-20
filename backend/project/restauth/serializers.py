@@ -98,4 +98,25 @@ class SignUpSerializer(serializers.Serializer):
         new_user.save()
         return new_user
 
+class AuPairUserSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        models = AuPairUser
+        fields = '__all__'
+
+class ProfileSerializer(serializers.ModelSerializer):
+    user = AuPairUserSerializer(required=True)
+    class Meta:
+        models = AuPairProfile
+        fields = '__all__'
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user')
+        username = self.validated_data['user']['username']
+        user = AuPairUser.object.get(username=username)
+        print(user)
+        user_serializer = AuPairUserSerializer(data=user_data)
+        if user_serializer.is_valid():
+            user_serializer.update(user, user_data)
+        instance.save()
+        return instance

@@ -73,7 +73,7 @@ class AuPairUser(AbstractBaseUser):
     def is_staff(self):
         return self.staff
 
-class AuPairInfo(models.Model):
+class AuPairProfile(models.Model):
     user = models.OneToOneField(AuPairUser, on_delete=models.CASCADE)
     date_of_birth = models.DateField()
     town = models.CharField(max_length=100)

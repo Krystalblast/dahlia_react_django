@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import status, permissions
 from rest_framework.response import Response
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, UpdateAPIView
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
@@ -48,11 +48,19 @@ class SignInView(GenericAPIView):
         }, status = status.HTTP_200_OK)
 
 class SignOutView(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, *args, **kargs):
         request.user.auth_token.delete()
         msg = {"detail":_("Successfully logged out.")}
 
         return Response(msg, status = status.HTTP_204_NO_CONTENT)
+
+class ProfileUpdateView(UpdateAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = ProfileSerializer
+
+    def get_object(self):
+        return AuPairProfile.objects.get(user=self.request.user)
