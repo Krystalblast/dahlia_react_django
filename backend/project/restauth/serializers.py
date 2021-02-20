@@ -1,25 +1,39 @@
+from django.contrib.auth import authenticate
 import django.contrib.auth.password_validation as validators
 from django.utils.translation import ugettext_lazy as _
 from django.core import exceptions
 
+from rest_framework.authtoken.models import Token
 from rest_framework import serializers
 
 from .models import *
 
-class AuPairUserSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = AuPairUser
-        fields = ('username',
-                    'email',
-                    'password',
-                    'first_name',
-                    'last_name',
-                    'agency',
-                    'created_dt',
-                    'modified_dt',
-                    'last_login')
-        read_only_fields = ('email', )
+class AuthAuPairUserSerializer(serializers.Serializer):
+    email = serializers.EmailField(label=_("Email"))
+    password = serializers.CharField(label=_("Password"), style={'input_type': 'password'})
+
+    def validate(self, attrs):
+        email = attrs.get('email')
+        password = attrs.get('password')
+
+        if email and password:
+            user = authenticate(email=email, password=password)
+            print('user: {}'.format(user))
+            if user:
+                if not user.is_active:
+                    msg = _('User account is disabled.')
+                    raise serializers.ValidationError(msg)
+
+            else:
+                msg = _('Unable to log in with provided credentials.')
+                raise serializers.ValidationError(msg)
+        else:
+            msg = _('Must include "username" and "password".')
+            raise serializers.ValidationError(msg)
+
+        attrs['user'] = user
+        return attrs
 
 class SignUpSerializer(serializers.Serializer):
     username = serializers.CharField(
@@ -83,3 +97,5 @@ class SignUpSerializer(serializers.Serializer):
         new_user.set_password(self.cleaned_data['password1'])
         new_user.save()
         return new_user
+
+

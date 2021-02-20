@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
+
     'rest_framework',
+    'rest_framework.authtoken',
+
     'restauth',
 ]
 
@@ -80,13 +83,13 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'dahlia_test3',
+        'NAME': 'dahlia_test4',
         'HOST': '127.0.0.1',
         'POST': 27071,
     }
 }
 
-
+AUTH_USER_MODEL = 'restauth.AuPairUser'
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 #AUTH_USER_MODEL = 'restauth.User'
@@ -130,5 +133,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
                 'rest_framework.authentication.BasicAuthentication',
                 'rest_framework.authentication.SessionAuthentication',
+                'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+                'rest_framework.permissions.IsAuthenticated'
     ]
 }

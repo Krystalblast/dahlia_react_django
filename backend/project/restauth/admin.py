@@ -7,6 +7,7 @@ from .forms import *
 from . models import *
 # Register your models here.
 
+
 class AuPairUserAdmin(BaseUserAdmin):
     add_form = AuPairUserCreationForm
     form = AuPairUserChangeForm

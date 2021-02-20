@@ -45,7 +45,8 @@ class AuPairUserChangeForm(forms.ModelForm):
                     'last_name',
                     'agency',
                     'active',
-                    'admin',)
+                    'admin',
+                    'staff',)
 
     def clean_password(self):
         return self.initial['password']

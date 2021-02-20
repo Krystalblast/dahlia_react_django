@@ -4,24 +4,25 @@ from django.utils.translation import ugettext_lazy as _
 # Create your models here.
 class AuPairUserManager(BaseUserManager):
 
-    def create_user(self, email, first_name, last_name, agency, password=None):
+    def create_user(self, email,  password=None):
         if not email:
             raise ValueError('User must have an email address')
 
         user = self.model(
             email = self.normalize_email(email),
-            first_name=first_name,
-            last_name=last_name,
-            agency=agency,
 
         )
-'''
-    def create_superuser(self, email, password):
-        user = self.create_user(email, password=password)
-        user.is_admin = True
-        user.save()
+        user.set_password(password)
+        user.save(using=self._db)
         return user
-'''
+
+    def create_superuser(self, email, password=None):
+        user = self.create_user(email, password=password)
+        user.admin = True
+        user.staff = True
+        user.save(using=self._db)
+        return user
+
 class AuPairUser(AbstractBaseUser):
     username = models.CharField(max_length=50,default='',editable=True)
     email = models.EmailField(_('email address'), unique=True)
@@ -30,6 +31,7 @@ class AuPairUser(AbstractBaseUser):
     agency = models.CharField(max_length=255)
     active = models.BooleanField(default=True)
     admin = models.BooleanField(default=False)
+    staff = models.BooleanField(default=False)
     created_dt = models.DateTimeField(_('create_dt'), auto_now_add=True)
     modified_dt = models.DateTimeField(_('modified_dt'), auto_now=True)
 
@@ -67,6 +69,9 @@ class AuPairUser(AbstractBaseUser):
     def is_admin(self):
         "Is the user an admin"
         return self.admin
+
+    def is_staff(self):
+        return self.staff
 
 class AuPairInfo(models.Model):
     user = models.OneToOneField(AuPairUser, on_delete=models.CASCADE)
