@@ -2,4 +2,4 @@
 /shelf/
 /workspace.xml
 /vcs.xml
-../*/__pycache__/*
+*/__pycache__/*
