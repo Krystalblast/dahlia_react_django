@@ -4,6 +4,6 @@
 /vcs.xml
 
 # python related files
-*/env/
+../env/
 *pycache*/
 *.pyc
