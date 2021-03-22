@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 
+<<<<<<< HEAD
 import {reduxForm, Field, propTypes, formValueSelector } from "redux-form";
+=======
+import {reduxForm, Field, propTypes } from "redux-form";
+>>>>>>> 70f61d34bc194eff42376621110ccc530c990b4a
 import { Link } from "react-router-dom";
 import { required } from "redux-form-validators";
 
@@ -41,12 +45,20 @@ class SignIn extends Component {
             <div className="SignIn">
                 <form
                     className="col col-sm-4 cardt mt-5 p-2"
+<<<<<<< HEAD
                     onSubmit={handleSubmit}
+=======
+                    onSubmit={handleSubmit(signInUser)}
+>>>>>>> 70f61d34bc194eff42376621110ccc530c990b4a
                 >
                     <h2 className="text-md-center">Sign In</h2>
                     <hr/>
 
+<<<<<<< HEAD
                     <fieldset className="form-group">
+=======
+                    <fieldset className="fomr-group">
+>>>>>>> 70f61d34bc194eff42376621110ccc530c990b4a
                         <Field 
                             name="email"
                             label = "Email" 
@@ -71,7 +83,11 @@ class SignIn extends Component {
                         <button action="submit" className="btn btn-primary">Sign In</button>
                     </fieldset>
                     <br/>
+<<<<<<< HEAD
                     <Link to="/signUp"><button>Create New Account</button></Link>
+=======
+                    <Link to="/signup"><button>Create New Account</button></Link>
+>>>>>>> 70f61d34bc194eff42376621110ccc530c990b4a
                     <br/>
                 </form>
                                                                 
@@ -81,6 +97,10 @@ class SignIn extends Component {
 }
 
 export default reduxForm({
+<<<<<<< HEAD
     form: "signIn",
     onSubmit: signInUser,
+=======
+    form: "signIn"
+>>>>>>> 70f61d34bc194eff42376621110ccc530c990b4a
 })(SignIn);
