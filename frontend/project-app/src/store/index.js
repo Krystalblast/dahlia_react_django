@@ -18,4 +18,4 @@ function configureStore(initialState) {
 
 let store = configureStore();
 
-export default store;
+export default store
