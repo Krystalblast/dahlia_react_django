@@ -2,7 +2,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
- // entry: './src/index.js',
  mode: 'development',
  entry: {
     index: './src/index.js',
@@ -45,12 +44,10 @@ module.exports = {
   resolve: {
    extensions: ['*', '.js', '.jsx'],
  },
-<<<<<<< HEAD
  externals:{
    config: JSON.stringify({
       apiUrl: 'http://localhost:8000'
    })
  },
-=======
->>>>>>> 70f61d34bc194eff42376621110ccc530c990b4a
+
 };

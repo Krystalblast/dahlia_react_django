@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 
-<<<<<<< HEAD
 import {reduxForm, Field, propTypes, formValueSelector } from "redux-form";
-=======
-import {reduxForm, Field, propTypes } from "redux-form";
->>>>>>> 70f61d34bc194eff42376621110ccc530c990b4a
 import { Link } from "react-router-dom";
 import { required } from "redux-form-validators";
 
