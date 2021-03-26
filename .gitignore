@@ -2,11 +2,11 @@
 /env/
 
 #IDE metadata 
-**.idea/**
+/.idea/
 
 # python related files
-**/__pycache__/
+**/__pycache__/**
 *.pyc
 
 # ignore migrations
-**/migrations/
+**/migrations/**
