@@ -79,3 +79,4 @@ class AuPairProfile(models.Model):
     town = models.CharField(max_length=100)
     state = models.CharField(max_length=30)
     zipcode = models.CharField(max_length=5)
+    description = models.CharField(max_length=1000)

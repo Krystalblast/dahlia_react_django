@@ -1,2 +1,12 @@
 # python virtual env
 /env/
+
+#IDE metadata 
+**.idea/**
+
+# python related files
+**/__pycache__/
+*.pyc
+
+# ignore migrations
+**/migrations/

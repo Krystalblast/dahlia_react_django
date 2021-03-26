@@ -2,7 +2,13 @@
 /shelf/
 /workspace.xml
 /vcs.xml
+/misc.xml
+/dahlia_react_django.iml
+/modules.xml
 
 # python related files
-*pycache*/
+**/__pycache__/
 *.pyc
+
+# ignore migrations
+**/migrations/
