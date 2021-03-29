@@ -8,11 +8,21 @@ from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
 
 from .serializers import *
 from .models import *
+
+
 # Create your views here.
+
+def csrf(request):
+    return JsonResponse({'crsfToken': get_token(request)})
+
+
+def ping(request):
+    return JsonResponse({'result': 'OK'})
 
 class SignUpView(GenericAPIView):
     serializer_class = SignUpSerializer
@@ -31,8 +41,9 @@ class SignUpView(GenericAPIView):
 
         return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
 
+
 class SignInView(GenericAPIView):
-    #permission_classes = [AllowAny]
+    # permission_classes = [AllowAny]
     serializer_class = AuthAuPairUserSerializer
 
     def post(self, request, *args, **kwargs):
@@ -45,7 +56,8 @@ class SignInView(GenericAPIView):
             'token': token.key,
             'user_id': user.pk,
             'email': user.email
-        }, status = status.HTTP_200_OK)
+        }, status=status.HTTP_200_OK)
+
 
 class SignOutView(APIView):
     authentication_classes = (TokenAuthentication,)
@@ -53,9 +65,10 @@ class SignOutView(APIView):
 
     def get(self, request, *args, **kargs):
         request.user.auth_token.delete()
-        msg = {"detail":_("Successfully logged out.")}
+        msg = {"detail": _("Successfully logged out.")}
 
-        return Response(msg, status = status.HTTP_204_NO_CONTENT)
+        return Response(msg, status=status.HTTP_204_NO_CONTENT)
+
 
 class ProfileUpdateView(UpdateAPIView):
     authentication_classes = (TokenAuthentication,)
