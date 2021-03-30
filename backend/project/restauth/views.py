@@ -18,7 +18,7 @@ from .models import *
 # Create your views here.
 
 def csrf(request):
-    return JsonResponse({'crsfToken': get_token(request)})
+    return JsonResponse({'csrfToken': get_token(request)})
 
 
 def ping(request):
