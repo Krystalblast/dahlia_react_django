@@ -35,6 +35,7 @@ class AuthAuPairUserSerializer(serializers.Serializer):
         attrs['user'] = user
         return attrs
 
+
 class SignUpSerializer(serializers.Serializer):
     username = serializers.CharField(
         max_length=120,
@@ -78,34 +79,36 @@ class SignUpSerializer(serializers.Serializer):
 
     def get_cleaned_data(self):
         return {
-            'username': self.validated_data.get('username',''),
+            'username': self.validated_data.get('username', ''),
             'password1': self.validated_data.get('password1', ''),
             'email': self.validated_data.get('email', ''),
-            'first_name': self.validated_data.get('first_name',''),
-            'last_name': self.validated_data.get('last_name',''),
-            'agency': self.validated_data.get('agency',''),
+            'first_name': self.validated_data.get('first_name', ''),
+            'last_name': self.validated_data.get('last_name', ''),
+            'agency': self.validated_data.get('agency', ''),
         }
 
     def save(self, request):
         self.cleaned_data = self.get_cleaned_data()
         new_user = AuPairUser(username=self.cleaned_data['username'],
-                            email=self.cleaned_data['email'],
-                            first_name=self.cleaned_data['first_name'],
-                            last_name=self.cleaned_data['last_name'],
-                            agency=self.cleaned_data['agency'],
-                           )
+                              email=self.cleaned_data['email'],
+                              first_name=self.cleaned_data['first_name'],
+                              last_name=self.cleaned_data['last_name'],
+                              agency=self.cleaned_data['agency'],
+                              )
         new_user.set_password(self.cleaned_data['password1'])
         new_user.save()
         return new_user
 
-class AuPairUserSerializer(serializers.ModelSerializer):
 
+class AuPairUserSerializer(serializers.ModelSerializer):
     class Meta:
         models = AuPairUser
         fields = '__all__'
 
+
 class ProfileSerializer(serializers.ModelSerializer):
     user = AuPairUserSerializer(required=True)
+
     class Meta:
         models = AuPairProfile
         fields = '__all__'
