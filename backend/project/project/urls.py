@@ -20,6 +20,5 @@ from django.urls import path,include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('csrf/', views.csrf, name='csrf'),
-    path('ping/', views.ping, name='ping'),
     path('rest-auth/',include('restauth.urls')),
 ]
