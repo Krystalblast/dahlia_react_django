@@ -1,5 +1,4 @@
 from rest_framework import serializers
-# from backend.project.restauth.serializers import AuPairUserSerializer
 from .models import Friend
 
 
