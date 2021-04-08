@@ -3,7 +3,6 @@ import django.contrib.auth.password_validation as validators
 from django.utils.translation import ugettext_lazy as _
 from django.core import exceptions
 
-from rest_framework.authtoken.models import Token
 from rest_framework import serializers
 
 from .models import *
@@ -102,7 +101,7 @@ class SignUpSerializer(serializers.Serializer):
 
 class AuPairUserSerializer(serializers.ModelSerializer):
     class Meta:
-        models = AuPairUser
+        model = AuPairUser
         fields = '__all__'
 
 
@@ -110,7 +109,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     user = AuPairUserSerializer(required=True)
 
     class Meta:
-        models = AuPairProfile
+        model = AuPairProfile
         fields = '__all__'
 
     def update(self, instance, validated_data):

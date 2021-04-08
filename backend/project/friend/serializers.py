@@ -5,6 +5,11 @@ from .models import Friend
 
 class FriendSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        app_label = 'friend'
+        model = Friend
+        fields = '__all__'
+
     def create(self, validated_data):
         return Friend.object.create(**validated_data)
 
