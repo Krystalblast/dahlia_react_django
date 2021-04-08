@@ -1,15 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
+
+
 # Create your models here.
+
+
 class AuPairUserManager(BaseUserManager):
 
-    def create_user(self, email,  password=None):
+    def create_user(self, email, password=None):
         if not email:
             raise ValueError('User must have an email address')
 
         user = self.model(
-            email = self.normalize_email(email),
+            email=self.normalize_email(email),
 
         )
         user.set_password(password)
@@ -23,8 +27,9 @@ class AuPairUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 class AuPairUser(AbstractBaseUser):
-    username = models.CharField(max_length=50,default='',editable=True)
+    username = models.CharField(max_length=50, default='', editable=True)
     email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -44,16 +49,16 @@ class AuPairUser(AbstractBaseUser):
         return self.email
 
     def get_full_name(self):
-        #The use is identified by their email address
+        # The use is identified by their email address
         return self.email
 
     def get_short_name(self):
-         #The use is identified by their email address
+        # The use is identified by their email address
         return self.email
 
     def has_perm(self, perm, obj=None):
-        "Does the user have a specific permission?"
-         # Simplest possible answer: Yes, always
+        """Does the user have a specific permission?"""
+        # Simplest possible answer: Yes, always
         return True
 
     def has_module_perms(self, app_label):
@@ -62,16 +67,17 @@ class AuPairUser(AbstractBaseUser):
 
     @property
     def is_active(self):
-        "Is the user active?"
+        """Is the user active?"""
         return self.active
 
     @property
     def is_admin(self):
-        "Is the user an admin"
+        """Is the user an admin"""
         return self.admin
 
     def is_staff(self):
         return self.staff
+
 
 class AuPairProfile(models.Model):
     user = models.OneToOneField(AuPairUser, on_delete=models.CASCADE)

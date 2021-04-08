@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'friend',
     'message',
     'post',
+    'group',
 ]
 
 MIDDLEWARE = [
