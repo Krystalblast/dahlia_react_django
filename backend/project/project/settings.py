@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'aupairnearby',
     'friend',
     'message',
+    'post',
 ]
 
 MIDDLEWARE = [
