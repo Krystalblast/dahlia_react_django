@@ -1,5 +1,6 @@
 # python virtual env
 /env/
+/venv/
 
 #IDE metadata 
 /.idea/
@@ -10,3 +11,6 @@
 
 # ignore migrations
 **/migrations/**
+
+# log files
+*.log

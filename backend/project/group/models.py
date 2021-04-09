@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
-from message.models import Message
+# from message.models import Message
 # Create your models here.
+from message.models import Message
 
 AuPairUser = get_user_model()
 

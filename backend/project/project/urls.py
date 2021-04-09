@@ -13,12 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from restauth import views
+from django.urls import path, include
 from django.contrib import admin
-from django.urls import path,include
+from rest_framework.urlpatterns import format_suffix_patterns
+from restauth import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('csrf/', views.csrf, name='csrf'),
-    path('rest-auth/',include('restauth.urls')),
+    path('rest-auth/', include('restauth.urls')),
+    path('friends/', include('friend.urls')),
+    # path('friends/', views.FriendsList.as_view()),
 ]

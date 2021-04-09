@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 
-
 # Create your models here.
 
 
@@ -86,3 +85,7 @@ class AuPairProfile(models.Model):
     state = models.CharField(max_length=30)
     zipcode = models.CharField(max_length=5)
     description = models.CharField(max_length=1000)
+    # friends = models.ForeignKey(AuPairUser, on_delete=models.CASCADE, related_name='friends')
+
+    def __str__(self):
+        return '%s: %s' % (str(self.user), str(self.friends))
