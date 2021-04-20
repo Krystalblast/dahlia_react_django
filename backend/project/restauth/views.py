@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import status, permissions
@@ -8,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.middleware.csrf import get_token
 
 from .serializers import *
@@ -19,6 +18,20 @@ from .models import *
 
 def csrf(request):
     return JsonResponse({'csrfToken': get_token(request)})
+
+
+def get_user(email):
+    try:
+        return AuPairUser.objects.get(email=email)
+    except AuPairUser.DoesNotExist:
+        raise Http404
+
+
+def get_profile(user):
+    try:
+        return AuPairProfile.objects.get(user=user)
+    except AuPairProfile.DoesNotExist:
+        raise Http404
 
 
 class SignUpView(GenericAPIView):

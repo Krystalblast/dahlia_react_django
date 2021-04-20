@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.db.models import signals
+from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
+
 
 # Create your models here.
 
@@ -80,12 +83,12 @@ class AuPairUser(AbstractBaseUser):
 
 class AuPairProfile(models.Model):
     user = models.OneToOneField(AuPairUser, on_delete=models.CASCADE)
-    date_of_birth = models.DateField()
-    town = models.CharField(max_length=100)
-    state = models.CharField(max_length=30)
-    zipcode = models.CharField(max_length=5)
-    description = models.CharField(max_length=1000)
-    # friends = models.ForeignKey(AuPairUser, on_delete=models.CASCADE, related_name='friends')
+    date_of_birth = models.DateField(null=True)
+    town = models.CharField(max_length=100, null=True)
+    state = models.CharField(max_length=30, null=True)
+    zipcode = models.CharField(max_length=5, null=True)
+    description = models.CharField(max_length=1000, null=True)
+    friends = models.ForeignKey(AuPairUser, null=True, on_delete=models.CASCADE, related_name='friends')
 
     def __str__(self):
         return '%s: %s' % (str(self.user), str(self.friends))

@@ -2,21 +2,21 @@ from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 
-from .models import AuPairUser
+from .models import AuPairUser, AuPairProfile
+
 
 class AuPairUserCreationForm(forms.ModelForm):
-
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
 
     class Meta:
         model = AuPairUser
         fields = ('username',
-                    'email',
-                    'first_name',
-                    'last_name',
-                    'agency',
-                    )
+                  'email',
+                  'first_name',
+                  'last_name',
+                  'agency',
+                  )
 
     def clean_password2(self):
         password1 = self.cleaned_data.get('password1')
@@ -32,21 +32,38 @@ class AuPairUserCreationForm(forms.ModelForm):
             user.save()
         return user
 
-class AuPairUserChangeForm(forms.ModelForm):
 
+class AuPairUserChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField()
 
     class Meta:
         model = AuPairUser
         fields = ('username',
-                    'email',
-                    'password',
-                    'first_name',
-                    'last_name',
-                    'agency',
-                    'active',
-                    'admin',
-                    'staff',)
+                  'email',
+                  'password',
+                  'first_name',
+                  'last_name',
+                  'agency',
+                  'active',
+                  'admin',
+                  'staff',)
 
     def clean_password(self):
         return self.initial['password']
+
+
+class AuPairUserProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = AuPairProfile
+        fields = ('date_of_birth',
+                  'town',
+                  'state',
+                  'zipcode',
+                  'description',)
+
+        def save(self, commit=True):
+            profile = super().save(commit=False)
+            if commit:
+                profile.save()
+            return profile

@@ -1,7 +1,6 @@
 from django.http import Http404
 from requests import Response
 from rest_framework import status
-from rest_framework.decorators import api_view
 
 from .models import Friend
 from .serializers import FriendSerializer

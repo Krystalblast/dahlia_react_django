@@ -28,6 +28,7 @@ ALLOWED_HOSTS = ['localhost',
                  '127.0.0.1',
                  '10.0.2.2',
                  '10.0.0.216',
+                 'testserver',
                  ]
 
 # Application definition
@@ -151,7 +152,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
     # comment the line below, to fix sign up view without credential. 
-    #'DEFAULT_PERMISSION_CLASSES': [
+    # 'DEFAULT_PERMISSION_CLASSES': [
     #    'rest_framework.permissions.IsAuthenticated'
-    #]  
+    # ]
 }
