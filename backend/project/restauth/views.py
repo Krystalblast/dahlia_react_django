@@ -49,7 +49,8 @@ class SignUpView(GenericAPIView):
                 token = Token.objects.create(user=new_user)
                 json = serializer.data
                 json['token'] = token.key
-            return Response(json, status=status.HTTP_201_CREATED)
+                AuPairProfile.objects.create(user=new_user)
+        return Response(json, status=status.HTTP_201_CREATED)
 
         return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
 
