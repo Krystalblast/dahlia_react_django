@@ -6,9 +6,10 @@ from django.core import exceptions
 from rest_framework import serializers
 
 from .models import *
+from friend.serializers import FriendSerializer
 
 
-class AuthAuPairUserSerializer(serializers.Serializer):
+class AuthAuPairUserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(label=_("Email"))
     password = serializers.CharField(label=_("Password"), style={'input_type': 'password'})
 
@@ -35,7 +36,32 @@ class AuthAuPairUserSerializer(serializers.Serializer):
         return attrs
 
 
-class SignUpSerializer(serializers.Serializer):
+class AuPairUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AuPairUser
+        fields = '__all__'
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    user = AuPairUserSerializer(required=True)
+
+    class Meta:
+        model = AuPairProfile
+        fields = '__all__'
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user')
+        username = self.validated_data['user']['username']
+        user = AuPairUser.object.get(username=username)
+        print(user)
+        user_serializer = AuPairUserSerializer(data=user_data)
+        if user_serializer.is_valid():
+            user_serializer.update(user, user_data)
+        instance.save()
+        return instance
+
+
+class SignUpSerializer(serializers.ModelSerializer):
     username = serializers.CharField(
         max_length=120,
         min_length=5)
@@ -45,6 +71,8 @@ class SignUpSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length=255, required=True)
     last_name = serializers.CharField(max_length=255, required=True)
     agency = serializers.CharField(max_length=255, required=True)
+    profile = ProfileSerializer()
+    friends = FriendSerializer()
 
     def validated_username(self, username):
         usr = AuPairUser.objects.filter(username=username)
@@ -97,28 +125,3 @@ class SignUpSerializer(serializers.Serializer):
         new_user.set_password(self.cleaned_data['password1'])
         new_user.save()
         return new_user
-
-
-class AuPairUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AuPairUser
-        fields = '__all__'
-
-
-class ProfileSerializer(serializers.ModelSerializer):
-    user = AuPairUserSerializer(required=True)
-
-    class Meta:
-        model = AuPairProfile
-        fields = '__all__'
-
-    def update(self, instance, validated_data):
-        user_data = validated_data.pop('user')
-        username = self.validated_data['user']['username']
-        user = AuPairUser.object.get(username=username)
-        print(user)
-        user_serializer = AuPairUserSerializer(data=user_data)
-        if user_serializer.is_valid():
-            user_serializer.update(user, user_data)
-        instance.save()
-        return instance

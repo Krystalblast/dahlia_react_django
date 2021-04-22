@@ -4,7 +4,6 @@ from django.db.models import signals
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
 
-
 # Create your models here.
 
 
@@ -30,6 +29,17 @@ class AuPairUserManager(BaseUserManager):
         return user
 
 
+class AuPairProfile(models.Model):
+    date_of_birth = models.DateField(null=True)
+    town = models.CharField(max_length=100, null=True)
+    state = models.CharField(max_length=30, null=True)
+    zipcode = models.CharField(max_length=5, null=True)
+    description = models.CharField(max_length=1000, null=True)
+
+    def __str__(self):
+        return '%s: %s' % (str(self.user), str(self.friends))
+
+
 class AuPairUser(AbstractBaseUser):
     username = models.CharField(max_length=50, default='', editable=True)
     email = models.EmailField(_('email address'), unique=True)
@@ -41,6 +51,8 @@ class AuPairUser(AbstractBaseUser):
     staff = models.BooleanField(default=False)
     created_dt = models.DateTimeField(_('create_dt'), auto_now_add=True)
     modified_dt = models.DateTimeField(_('modified_dt'), auto_now=True)
+    profile = models.ForeignKey(AuPairProfile, on_delete=models.CASCADE)
+    friends = models.ForeignKey('self', null=True, on_delete=models.CASCADE, related_name='friendslist')
 
     objects = AuPairUserManager()
 
@@ -79,16 +91,3 @@ class AuPairUser(AbstractBaseUser):
 
     def is_staff(self):
         return self.staff
-
-
-class AuPairProfile(models.Model):
-    user = models.OneToOneField(AuPairUser, on_delete=models.CASCADE)
-    date_of_birth = models.DateField(null=True)
-    town = models.CharField(max_length=100, null=True)
-    state = models.CharField(max_length=30, null=True)
-    zipcode = models.CharField(max_length=5, null=True)
-    description = models.CharField(max_length=1000, null=True)
-    friends = models.ForeignKey(AuPairUser, null=True, on_delete=models.CASCADE, related_name='friends')
-
-    def __str__(self):
-        return '%s: %s' % (str(self.user), str(self.friends))

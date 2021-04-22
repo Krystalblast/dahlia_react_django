@@ -12,7 +12,7 @@ class AuPairUserProfileAdmin(BaseUserAdmin):
     add_form = AuPairUserProfileForm
     model = AuPairProfile
     list_display = ('state', 'description')
-    list_filter = ('user',)
+    list_filter = ('state',)
     fieldsets = (
         (None, {'fields': ()}),
         ('Personal info', {'fields': ('date_of_birth', 'town', 'state', 'zipcode', 'description')}),
@@ -31,8 +31,8 @@ class AuPairUserProfileAdmin(BaseUserAdmin):
          ),
     )
 
-    search_fields = ('town',)
-    ordering = ('town',)
+    search_fields = ('state',)
+    ordering = ('state',)
     filter_horizontal = ()
 
 
