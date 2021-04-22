@@ -71,8 +71,10 @@ class SignUpSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(max_length=255, required=True)
     last_name = serializers.CharField(max_length=255, required=True)
     agency = serializers.CharField(max_length=255, required=True)
-    profile = ProfileSerializer()
-    friends = FriendSerializer()
+
+    class Meta:
+        model = AuPairUser
+        exclude = ['password']
 
     def validated_username(self, username):
         usr = AuPairUser.objects.filter(username=username)

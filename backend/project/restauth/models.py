@@ -51,7 +51,7 @@ class AuPairUser(AbstractBaseUser):
     staff = models.BooleanField(default=False)
     created_dt = models.DateTimeField(_('create_dt'), auto_now_add=True)
     modified_dt = models.DateTimeField(_('modified_dt'), auto_now=True)
-    profile = models.ForeignKey(AuPairProfile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(AuPairProfile, null=True, on_delete=models.CASCADE)
     friends = models.ForeignKey('self', null=True, on_delete=models.CASCADE, related_name='friendslist')
 
     objects = AuPairUserManager()
