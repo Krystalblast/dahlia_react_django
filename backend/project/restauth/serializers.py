@@ -6,12 +6,15 @@ from django.core import exceptions
 from rest_framework import serializers
 
 from .models import *
-from friend.serializers import FriendSerializer
 
 
 class AuthAuPairUserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(label=_("Email"))
     password = serializers.CharField(label=_("Password"), style={'input_type': 'password'})
+
+    class Meta:
+        model = AuPairUser
+        fields = ['email', 'password']
 
     def validate(self, attrs):
         email = attrs.get('email')
