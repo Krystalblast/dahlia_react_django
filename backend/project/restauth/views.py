@@ -1,3 +1,4 @@
+from django.contrib.auth import login
 from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import status, permissions
@@ -64,6 +65,7 @@ class SignInView(GenericAPIView):
 
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
+        login(request, user)
         return Response({
             'token': token.key,
             'user_id': user.pk,
