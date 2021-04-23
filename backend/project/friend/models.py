@@ -11,4 +11,7 @@ class Friend(models.Model):
     friend = models.ForeignKey(AuPairUser, on_delete=models.CASCADE, related_name='friend')
 
     def __str__(self):
-        return '%s: %s' % (str(self.friend), str(self.date_created))
+        return '%s: %s\n' % (str(self.user), str(self.friend))
+
+    class Meta:
+        unique_together = ['user', 'friend']
