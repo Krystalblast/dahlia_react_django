@@ -2,37 +2,24 @@ from django.contrib.auth import login
 from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import status, permissions
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView, UpdateAPIView
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
-from rest_framework.authentication import TokenAuthentication, BasicAuthentication
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.http import JsonResponse, Http404
 from django.middleware.csrf import get_token
 
 from .serializers import *
 from .models import *
-
-
 # Create your views here.
 
+
+@api_view(('GET',))
 def csrf(request):
     return JsonResponse({'csrfToken': get_token(request)})
-
-
-def get_user(email):
-    try:
-        return AuPairUser.objects.get(email=email)
-    except AuPairUser.DoesNotExist:
-        raise Http404
-
-
-def get_profile(user):
-    try:
-        return AuPairProfile.objects.get(user=user)
-    except AuPairProfile.DoesNotExist:
-        raise Http404
 
 
 class SignUpView(GenericAPIView):
@@ -91,3 +78,38 @@ class ProfileUpdateView(UpdateAPIView):
 
     def get_object(self):
         return AuPairProfile.objects.get(user=self.request.user)
+
+
+class UserGeneralView(APIView):
+
+    """
+    Retrieve AuPairUser by user_id
+    """
+    @api_view(('GET',))
+    @authentication_classes([TokenAuthentication, ])
+    @permission_classes([IsAuthenticated])
+    def get_user(self, user_id, **kwargs):
+        user = AuPairUser.objects.get(pk=user_id)
+        data = AuPairUserSerializer(user).data
+        return  Response(data, status=status.HTTP_200_OK)
+
+    """
+    Retrieve all AuPairUsers
+    """
+    @api_view(('GET',))
+    @authentication_classes([TokenAuthentication, ])
+    @permission_classes([IsAuthenticated])
+    def get_users(self):
+        queryset = AuPairUser.objects.all()
+        serializer = AuPairUserSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    """
+    Retrieve AuPairUsers profile
+    """
+    def get_profile(self, user):
+        # TODO: not correct
+        try:
+            return AuPairProfile.objects.get(user=user)
+        except AuPairProfile.DoesNotExist:
+            raise Http404

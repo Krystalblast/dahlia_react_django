@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from django.db.models import signals
-from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
@@ -60,7 +58,7 @@ class AuPairUser(AbstractBaseUser):
     REQUIRED_FIELD = []
 
     def __str__(self):
-        return self.email
+        return '%d %s' % (self.pk, str(self.email))
 
     def get_full_name(self):
         # The use is identified by their email address
