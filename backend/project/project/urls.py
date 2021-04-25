@@ -23,5 +23,6 @@ urlpatterns = [
     path('csrf/', views.csrf, name='csrf'),
     path('rest-auth/', include('restauth.urls')),
     path('friends/', include('friend.urls')),
+    path('posts/',include('post.urls')),
     # path('friends/', views.FriendsList.as_view()),
 ]
