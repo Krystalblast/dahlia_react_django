@@ -87,11 +87,11 @@ class UserGeneralView(APIView):
     """
     @api_view(('GET',))
     @authentication_classes([TokenAuthentication, ])
-    @permission_classes([IsAuthenticated])
+    # @permission_classes([IsAuthenticated])
     def get_user(self, user_id, **kwargs):
         user = AuPairUser.objects.get(pk=user_id)
         data = AuPairUserSerializer(user).data
-        return  Response(data, status=status.HTTP_200_OK)
+        return Response(data, status=status.HTTP_200_OK)
 
     """
     Retrieve all AuPairUsers

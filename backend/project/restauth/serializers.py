@@ -42,7 +42,13 @@ class AuthAuPairUserSerializer(serializers.ModelSerializer):
 class AuPairUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = AuPairUser
-        fields = '__all__'
+        exclude = ['password',
+                   'last_login',
+                   'active',
+                   'admin',
+                   'staff',
+                   'modified_dt',
+                   ]
 
 
 class ProfileSerializer(serializers.ModelSerializer):
