@@ -7,7 +7,7 @@ class FriendSerializer(serializers.ModelSerializer):
     class Meta:
         app_label = 'friend'
         model = Friend
-        fields = ['user', 'friend']
+        fields = ['id', 'user', 'friend']
 
     def create(self, validated_data):
         return Friend.objects.create(**validated_data)
