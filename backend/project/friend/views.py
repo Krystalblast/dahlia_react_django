@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.generics import GenericAPIView
+import json
 
 from .models import Friend
 from .serializers import FriendSerializer
@@ -38,13 +39,14 @@ class FriendsView(GenericAPIView):
     @api_view(('GET',))
     @authentication_classes([TokenAuthentication, ])
     # @permission_classes([IsAuthenticated])
-    def get_friends(self, format=None):
+    def get_friends(self, user_id, format=None):
         queryset = Friend.objects.all()
-        filtered = queryset.filter(user=self.user.pk)
+        filtered = queryset.filter(user=user_id)
         converted = []
         for friends in filtered:
             converted.append(friends.friend)
         data = AuPairUserSerializer(converted, many=True).data
+        js = json.dumps(data)
         return Response(data, status=status.HTTP_200_OK)
 
     """
