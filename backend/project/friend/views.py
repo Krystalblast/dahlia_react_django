@@ -60,3 +60,15 @@ class FriendsView(GenericAPIView):
         friends.delete()
         msg = {"detail": _("Successfully removed friend.")}
         return Response(msg, status=status.HTTP_200_OK)
+
+    """
+    For Testing
+    """
+    @api_view(('POST',))
+    @authentication_classes([TokenAuthentication, ])
+    # @permission_classes([IsAuthenticated])
+    def remove_friend2(self, friend_id, user_id, format=None):
+        friends = Friend.objects.get(user=user_id, friend=friend_id)
+        friends.delete()
+        msg = {"detail": _("Successfully removed friend.")}
+        return Response(msg, status=status.HTTP_200_OK)
