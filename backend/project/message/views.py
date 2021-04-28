@@ -58,7 +58,7 @@ class MessagesView(GenericAPIView):
                 lst = list(messages.values())
                 combined.append(lst)
 
-        return HttpResponse(combined, content_type='application/json')
+        return JsonResponse(combined, content_type='application/json', safe=False)
 
     """
     Remove Message from AuPairUsers' conversation with Friend
