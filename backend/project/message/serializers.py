@@ -7,7 +7,12 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         app_label = 'message'
         model = Message
-        fields = '__all__'
+        fields = ['id',
+                  'date_created',
+                  'message_creator',
+                  'message_receiver',
+                  'message_text',
+                  'message_media', ]
 
     def create(self, validated_data):
         return Message.object.create(**validated_data)
