@@ -70,7 +70,7 @@ class MessagesView(GenericAPIView):
         message = Message.objects.get(pk=msg_id)
         if message:
             message.delete()
-            return Response({"detail": _("Successfully removed friend.")}, status=status.HTTP_200_OK)
+            return Response({"detail": _("Successfully removed message.")}, status=status.HTTP_200_OK)
 
         return Response({"error": _("Something went wrong.")}, status=status.HTTP_404_NOT_FOUND)
 
@@ -80,7 +80,7 @@ class MessagesView(GenericAPIView):
     @api_view(('POST',))
     @authentication_classes([TokenAuthentication, ])
     # @permission_classes([IsAuthenticated])
-    def remove_messages(self, queryset, user_id, friend_id, format=None):
+    def remove_messages(self, user_id, friend_id, format=None):
         all_msg = Message.objects.all()
         # user = AuPairUser.objects.get(pk=self.user.pk)
         user = AuPairUser.objects.get(pk=user_id)
