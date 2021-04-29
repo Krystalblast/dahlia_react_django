@@ -19,7 +19,7 @@ class Post(models.Model):
 
     def __str__(self):
         return str(self.post_text) + " " + str(self.date_created)
-    
+
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk':self.pk})
 
@@ -35,5 +35,5 @@ class Like(models.Model):
     like_creator = models.ForeignKey(AuPairUser, related_name='likes', on_delete=models.CASCADE)
     post = models.ForeignKey(Post, related_name='likes', on_delete=models.CASCADE)
 
-##Credit: Kumar Shubham Jan 3, 2021 Originally published at towardsdatascience.com 
-##Link: https://dev.to/shubham1710/build-a-social-media-website-with-django-feed-app-backend-part-4-4hn4
+# Credit: Kumar Shubham Jan 3, 2021 Originally published at towardsdatascience.com
+# Link: https://dev.to/shubham1710/build-a-social-media-website-with-django-feed-app-backend-part-4-4hn4
