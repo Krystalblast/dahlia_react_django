@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
-from django.utils import timezon
+from django.utils import timezone
 # Create your models here.
 AuPairUser = get_user_model()
 
@@ -23,11 +23,13 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk':self.pk})
 
+
 class Comments(models.Model):
     post = models.ForeignKey(Post, related_name='details', on_delete=models.CASCADE)
     comment_creator = models.ForeignKey(AuPairUser, related_name='details', on_delete=models.CASCADE)
     comment_text = models.CharField(max_length=255)
     comment_date = models.DateTimeField(default=timezone.now, auto_now_add=True)
+
 
 class Like(models.Model):
     like_creator = models.ForeignKey(AuPairUser, related_name='likes', on_delete=models.CASCADE)
