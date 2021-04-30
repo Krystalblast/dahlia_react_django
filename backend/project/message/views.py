@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.utils.translation import ugettext_lazy as _
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -57,7 +57,6 @@ class MessagesView(GenericAPIView):
             if messages:
                 lst = list(messages.values())
                 combined.append(lst)
-
         return JsonResponse(combined, content_type='application/json', safe=False)
 
     """
