@@ -39,7 +39,7 @@ class AuPairProfile(models.Model):
 
 
 class AuPairUser(AbstractBaseUser):
-    username = models.CharField(max_length=50, default='', editable=True)
+    username = models.CharField(max_length=50, default='', editable=True, unique=True)
     email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -53,7 +53,7 @@ class AuPairUser(AbstractBaseUser):
 
     objects = AuPairUserManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
     REQUIRED_FIELD = []
 
     def __str__(self):

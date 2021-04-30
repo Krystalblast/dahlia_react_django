@@ -5,7 +5,9 @@ from django.utils import timezone
 
 # Create your models here.
 AuPairUser = get_user_model()
+STATUS = (
 
+)
 
 class Post(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
@@ -13,7 +15,7 @@ class Post(models.Model):
     post_text = models.CharField(max_length=255)
     post_liked = models.ForeignKey(AuPairUser, on_delete=models.CASCADE, related_name='post_liked')
     post_replies = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies')
-    post_media = models.URLField()
+    #post_media = models.URLField()
 
     class Meta:
         ordering = ["date_created"]
@@ -25,7 +27,7 @@ class Post(models.Model):
         return reverse('post-detail', kwargs={'pk': self.pk})
 
 
-class Comments(models.Model):
+class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='details', on_delete=models.CASCADE)
     comment_creator = models.ForeignKey(AuPairUser, related_name='details', on_delete=models.CASCADE)
     comment_text = models.CharField(max_length=255)
@@ -36,5 +38,3 @@ class Like(models.Model):
     like_creator = models.ForeignKey(AuPairUser, related_name='likes', on_delete=models.CASCADE)
     post = models.ForeignKey(Post, related_name='likes', on_delete=models.CASCADE)
 
-# Credit: Kumar Shubham Jan 3, 2021 Originally published at towardsdatascience.com
-# Link: https://dev.to/shubham1710/build-a-social-media-website-with-django-feed-app-backend-part-4-4hn4
