@@ -2,12 +2,13 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils import timezone
+
 # Create your models here.
 AuPairUser = get_user_model()
 
 
 class Post(models.Model):
-    date_created = models.DateTimeField(auto_now_add=True, default=timezone.now)
+    date_created = models.DateTimeField(auto_now_add=True)
     post_creator = models.ForeignKey(AuPairUser, on_delete=models.CASCADE, related_name='post_creator')
     post_text = models.CharField(max_length=255)
     post_liked = models.ForeignKey(AuPairUser, on_delete=models.CASCADE, related_name='post_liked')
@@ -15,20 +16,20 @@ class Post(models.Model):
     post_media = models.URLField()
 
     class Meta:
-        ordering = ["-date_created"]
+        ordering = ["date_created"]
 
     def __str__(self):
         return str(self.post_text) + " " + str(self.date_created)
 
     def get_absolute_url(self):
-        return reverse('post-detail', kwargs={'pk':self.pk})
+        return reverse('post-detail', kwargs={'pk': self.pk})
 
 
 class Comments(models.Model):
     post = models.ForeignKey(Post, related_name='details', on_delete=models.CASCADE)
     comment_creator = models.ForeignKey(AuPairUser, related_name='details', on_delete=models.CASCADE)
     comment_text = models.CharField(max_length=255)
-    comment_date = models.DateTimeField(default=timezone.now, auto_now_add=True)
+    comment_date = models.DateTimeField(auto_now_add=True)
 
 
 class Like(models.Model):
