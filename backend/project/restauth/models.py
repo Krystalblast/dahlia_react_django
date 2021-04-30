@@ -53,7 +53,7 @@ class AuPairUser(AbstractBaseUser):
 
     objects = AuPairUserManager()
 
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELD = []
 
     def __str__(self):
