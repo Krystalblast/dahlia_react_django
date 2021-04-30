@@ -53,11 +53,11 @@ class AuPairUser(AbstractBaseUser):
 
     objects = AuPairUserManager()
 
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELD = []
 
     def __str__(self):
-        return '%d %s' % (self.pk, str(self.email))
+        return '%d %s %s' % (self.pk, str(self.username), str(self.email))
 
     def get_full_name(self):
         # The use is identified by their email address
