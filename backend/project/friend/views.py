@@ -6,7 +6,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.generics import GenericAPIView
-import json
 
 from .models import Friend
 from .serializers import FriendSerializer
@@ -34,7 +33,7 @@ class FriendsView(GenericAPIView):
         return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
 
     """
-    Get Friend from AuPairUsers friends_list
+    Get FriendsList of AuPairUser
     """
     @api_view(('GET',))
     @authentication_classes([TokenAuthentication, ])
@@ -46,7 +45,6 @@ class FriendsView(GenericAPIView):
         for friends in filtered:
             converted.append(friends.friend)
         data = AuPairUserSerializer(converted, many=True).data
-        js = json.dumps(data)
         return Response(data, status=status.HTTP_200_OK)
 
     """

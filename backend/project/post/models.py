@@ -9,13 +9,14 @@ STATUS = (
 
 )
 
+
 class Post(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     post_creator = models.ForeignKey(AuPairUser, on_delete=models.CASCADE, related_name='post_creator')
     post_text = models.CharField(max_length=255)
     post_liked = models.ForeignKey(AuPairUser, on_delete=models.CASCADE, related_name='post_liked')
     post_replies = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies')
-    #post_media = models.URLField()
+    # post_media = models.URLField()
 
     class Meta:
         ordering = ["date_created"]
@@ -37,4 +38,3 @@ class Comment(models.Model):
 class Like(models.Model):
     like_creator = models.ForeignKey(AuPairUser, related_name='likes', on_delete=models.CASCADE)
     post = models.ForeignKey(Post, related_name='likes', on_delete=models.CASCADE)
-

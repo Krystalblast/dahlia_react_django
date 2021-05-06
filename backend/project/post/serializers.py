@@ -1,29 +1,29 @@
 from rest_framework import serializers
 from .models import Post, Comment, Like
 
-class CommentSerializer(serializers.ModelSerializer):
 
+class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__'
 
-class LikeSerializer(serializers.ModelSerializer):
 
+class LikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like
         fields = '__all__'
 
+
 class PostSerializer(serializers.ModelSerializer):
-    
     post_replies = CommentSerializer(many=True, read_only=True)
     post_liked = LikeSerializer(many=True, read_only=True)
-    post_creator = serializers.ReadOnlyField(source='post_creator.username')
 
     class Meta:
         app_label = 'post'
         model = Post
         fields = '__all__'
-        #optional_fields = ('post_media')
+        # optional_fields = ('post_media')
+
     def create(self, validated_data):
         user_data = validated_data.pop('post_creator')
         print(f'User_data: {user_data.email}')
@@ -35,18 +35,16 @@ class PostSerializer(serializers.ModelSerializer):
         instance.post_text = validated_data.get('post_text', instance.post_text)
         instance.post_liked = validated_data.get('post_liked', instance.post_liked)
         instance.post_replies = validated_data.get('post_replies', instance.post_replies)
-       # instance.post_media = validated_data.get('post_media', instance.post_media)
+        # instance.post_media = validated_data.get('post_media', instance.post_media)
         instance.save()
         return instance
 
 
 class NewPostSerializer(serializers.ModelSerializer):
-
-    ##post_creator = serializers.ReadOnlyField(source=post_creator.username)
     post_replies = CommentSerializer(many=True, read_only=True)
     post_liked = LikeSerializer(many=True, read_only=True)
+
     class Meta:
         model = Post
-        fields = ['id','post_creator','post_text','post_replies','post_liked']
-        optional_fields = ('post_media')
-
+        fields = ['id', 'post_creator', 'post_text', 'post_replies', 'post_liked']
+        optional_fields = ('post_media',)
