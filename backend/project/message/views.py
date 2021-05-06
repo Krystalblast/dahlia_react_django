@@ -12,11 +12,15 @@ from django.db.models import Q
 from .models import Message
 from friend.models import Friend
 from restauth.models import *
+
+from .serializers import MessageSerializer
+
 AuPairUser = get_user_model()
 # Create your views here.
 
 
-class MessagesView(GenericAPIView):
+class SendMessageView(GenericAPIView):
+    serializer_class = MessageSerializer
 
     """
     Send Message to another AuPairUser
@@ -24,17 +28,47 @@ class MessagesView(GenericAPIView):
     @api_view(('POST',))
     @authentication_classes([TokenAuthentication, ])
     # @permission_classes([IsAuthenticated])
-    def send_message(self, user_id, friend_id, message, media, format=None):
+    # def send_message(self, user_id, friend_id, message, media, format=None):
+    def post(self, *args, **kwargs):
         # user = AuPairUser.objects.get(pk=self.user.pk)
-        user = AuPairUser.objects.get(pk=user_id)
-        friend = AuPairUser.objects.get(pk=friend_id)
-        message = Message.objects.create(message_creator=user,
-                                         message_receiver=friend,
-                                         message_text=message,
-                                         message_media=media)
-        message.save()
-        msg = {"detail": _("Message sent.")}
-        return Response(msg, status=status.HTTP_200_OK)
+        post_data = self.request.POST.copy()
+        # post_data = request.POST.copy()
+        serializer = self.serializer_class(data=post_data)
+        # serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid(raise_exception=ValueError):
+            new_msg = serializer.save()
+            if new_msg:
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
+
+        # user = AuPairUser.objects.get(pk=user_id)
+        # friend = AuPairUser.objects.get(pk=friend_id)
+        # message = Message.objects.create(message_creator=user,
+        #                                  message_receiver=friend,
+        #                                  message_text=message,
+        #                                  message_media=media)
+        # message.save()
+        # msg = {"detail": _("Message sent.")}
+        # return Response(msg, status=status.HTTP_200_OK)
+        #
+        # data = {'message_creator': user_id,
+        #         'message_receiver': friend_id,
+        #         'message_text': message,
+        #         'message_media': media,
+        #         }
+        # serializer = MessageSerializer(data=data)
+        #
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+        #
+        # return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
+
+
+class MessagesView(GenericAPIView):
+    # serializer_class = MessageSerializer
 
     """
     Get Messages from AuPairUsers' Friend(s)
