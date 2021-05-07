@@ -50,7 +50,7 @@ class FriendsView(GenericAPIView):
     """
     Remove Friend from AuPairUsers friends_list
     """
-    @api_view(('POST',))
+    @api_view(('DELETE',))
     @authentication_classes([TokenAuthentication, ])
     # @permission_classes([IsAuthenticated])
     def remove_friend(self, friend_id, format=None):
@@ -62,7 +62,7 @@ class FriendsView(GenericAPIView):
     """
     For Testing
     """
-    @api_view(('POST',))
+    @api_view(('DELETE',))
     @authentication_classes([TokenAuthentication, ])
     # @permission_classes([IsAuthenticated])
     def remove_friend2(self, friend_id, user_id, format=None):

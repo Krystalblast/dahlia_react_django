@@ -15,8 +15,8 @@ class LikeSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    post_replies = CommentSerializer(many=True, read_only=True)
-    post_liked = LikeSerializer(many=True, read_only=True)
+    post_replies = CommentSerializer(many=True, allow_null=True, read_only=True)
+    post_liked = LikeSerializer(many=True, allow_null=True, read_only=True)
 
     class Meta:
         app_label = 'post'
@@ -25,8 +25,6 @@ class PostSerializer(serializers.ModelSerializer):
         # optional_fields = ('post_media')
 
     def create(self, validated_data):
-        user_data = validated_data.pop('post_creator')
-        print(f'User_data: {user_data.email}')
         return Post.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
