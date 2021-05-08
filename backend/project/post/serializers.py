@@ -36,13 +36,3 @@ class PostSerializer(serializers.ModelSerializer):
         # instance.post_media = validated_data.get('post_media', instance.post_media)
         instance.save()
         return instance
-
-
-class NewPostSerializer(serializers.ModelSerializer):
-    post_replies = CommentSerializer(many=True, read_only=True)
-    post_liked = LikeSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Post
-        fields = ['id', 'post_creator', 'post_text', 'post_replies', 'post_liked']
-        optional_fields = ('post_media',)

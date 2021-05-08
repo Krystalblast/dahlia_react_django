@@ -10,7 +10,7 @@ class Message(models.Model):
     message_creator = models.ForeignKey(AuPairUser, on_delete=models.CASCADE, related_name='message_creator')
     message_receiver = models.ForeignKey(AuPairUser, on_delete=models.CASCADE, related_name='message_receiver')
     message_text = models.CharField(max_length=1020)
-    message_media = models.URLField()
+    # message_media = models.URLField(blank=True)
 
     def __str__(self):
         return "\nFrom: " + str(self.message_creator) +\

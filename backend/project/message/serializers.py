@@ -7,15 +7,10 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         app_label = 'message'
         model = Message
-        fields = ['id',
-                  'date_created',
-                  'message_creator',
-                  'message_receiver',
-                  'message_text',
-                  'message_media', ]
+        fields = '__all__'
 
     def create(self, validated_data):
-        return Message.object.create(**validated_data)
+        return Message.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.date_created = validated_data.get('date_created', instance.date_created)

@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .models import Post, Comment, Like, AuPairUser
-from .serializers import PostSerializer, NewPostSerializer, CommentSerializer, LikeSerializer
+from .serializers import PostSerializer, CommentSerializer, LikeSerializer
 
 # Create your views here.
 
