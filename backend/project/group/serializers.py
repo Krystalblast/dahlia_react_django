@@ -10,7 +10,7 @@ class GroupSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        return Group.object.create(**validated_data)
+        return Group.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.date_created = validated_data.get('date_created', instance.date_created)
