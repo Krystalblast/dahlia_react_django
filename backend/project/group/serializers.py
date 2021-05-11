@@ -1,8 +1,15 @@
 from rest_framework import serializers
 from .models import Group
 
+from restauth.serializers import AuPairUserSerializer
+from message.serializers import MessageSerializer
+
 
 class GroupSerializer(serializers.ModelSerializer):
+    group_creator = AuPairUserSerializer()
+    group_name = serializers.CharField(max_length=255)
+    group_users = AuPairUserSerializer()
+    group_chat = MessageSerializer()
 
     class Meta:
         app_label = 'group'

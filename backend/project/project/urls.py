@@ -25,4 +25,5 @@ urlpatterns = [
     path('friends/', include('friend.urls')),
     path('posts/', include('post.urls')),
     path('messages/', include('message.urls')),
+    path('groups/', include('group.urls')),
 ]
