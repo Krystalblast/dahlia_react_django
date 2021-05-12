@@ -9,4 +9,5 @@ urlpatterns = [
     path('get_user/<int:user_id>', UserGeneralView.get_user, name='get_user'),
     path('get_users/', UserGeneralView.get_users, name='get_users'),
     path('get_profile/', UserGeneralView.get_profile, name='get_profile'),
+    path('usr_list/', AuPairUserListView.as_view()),
 ]
