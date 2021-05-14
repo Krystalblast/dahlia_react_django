@@ -1,3 +1,6 @@
+from itertools import chain
+from operator import attrgetter
+
 from django.utils.translation import ugettext_lazy as _
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.decorators import api_view, authentication_classes
@@ -8,8 +11,11 @@ from rest_framework import status
 
 from .models import Post, Comment, Like, AuPairUser
 from .serializers import PostSerializer, CommentSerializer, LikeSerializer
-
+# from friend.views import get_friends
 # Create your views here.
+from friend.views import FriendsView
+
+from friend.models import Friend
 
 
 @authentication_classes([TokenAuthentication, ])
@@ -51,11 +57,14 @@ class PostsView(GenericAPIView):
     @authentication_classes([TokenAuthentication, ])
     def get_feed(self, user_id, format=None):
         queryset = Post.objects.all()
-        filtered = queryset.filter(post_creator_id=user_id).order_by('-date_created')
-        converted = []
-        for post in filtered:
-            converted.append(post)
-        data = PostSerializer(converted, many=True).data
+        filtered = queryset.filter(post_creator_id=user_id)
+        qry_friends = Friend.objects.all()
+        flt_friends = qry_friends.filter(user_id=user_id)
+        f_feeds = []
+        for friend in flt_friends:
+            f_feeds = list(chain(f_feeds,queryset.filter(post_creator_id=friend.friend.pk)))
+        result_list = sorted(chain(filtered, f_feeds), key=attrgetter('date_created'), reverse=True)
+        data = PostSerializer(result_list, many=True).data
         return Response(data, status=status.HTTP_200_OK)
 
 
