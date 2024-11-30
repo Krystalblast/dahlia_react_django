@@ -41,20 +41,14 @@ class SignIn extends Component {
             <div className="SignIn">
                 <form
                     className="col col-sm-4 cardt mt-5 p-2"
-<<<<<<< HEAD
                     onSubmit={handleSubmit}
-=======
-                    onSubmit={handleSubmit(signInUser)}
->>>>>>> 70f61d34bc194eff42376621110ccc530c990b4a
+
                 >
                     <h2 className="text-md-center">Sign In</h2>
                     <hr/>
 
-<<<<<<< HEAD
                     <fieldset className="form-group">
-=======
-                    <fieldset className="fomr-group">
->>>>>>> 70f61d34bc194eff42376621110ccc530c990b4a
+
                         <Field 
                             name="email"
                             label = "Email" 
@@ -79,11 +73,8 @@ class SignIn extends Component {
                         <button action="submit" className="btn btn-primary">Sign In</button>
                     </fieldset>
                     <br/>
-<<<<<<< HEAD
                     <Link to="/signUp"><button>Create New Account</button></Link>
-=======
-                    <Link to="/signup"><button>Create New Account</button></Link>
->>>>>>> 70f61d34bc194eff42376621110ccc530c990b4a
+
                     <br/>
                 </form>
                                                                 
