@@ -84,10 +84,6 @@ class SignIn extends Component {
 }
 
 export default reduxForm({
-<<<<<<< HEAD
     form: "signIn",
     onSubmit: signInUser,
-=======
-    form: "signIn"
->>>>>>> 70f61d34bc194eff42376621110ccc530c990b4a
 })(SignIn);
